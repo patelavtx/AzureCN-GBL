@@ -24,18 +24,108 @@ This Terraform module:
 ###  aztransitfnet84-cn 
 
 Example of deploying Aviatrix Transit in Azure China
+Example of *tfvars
+```
+controller_ip = ""
+ctrl_password = "Aviatrix123#"
+account       = "AzCN-proj"
+cloud         = "Azure"
+cidr          = "10.84.28.0/23"
+region        = "China East"
+rg            = "atulrg-tx84"
+localasn      = "65084"
+tags = {
+  ProjectName        = "CN test"
+  BusinessOwnerEmail = "apatel@aviatrix.com"
+}
+
+# nsg_management
+gateway_resource_group = "atulrg-cntx84"
+#gateway_region = "China North 3"
+gateway_name = "aztransit84-cn3"
+controller_nsg_name = "azCN-ctl-security-group"
+controller_nsg_resource_group_name = "AZCN-CTL-RG" 
+controller_nsg_rule_priority = "100"
+```
+
 
 
 ###  azspoke-dev85-cn
 
 Example of deploying Aviatrix Spoke in Azure China
+Example of *tfvars
+
+```
+controller_ip = ""
+ctrl_password = "Aviatrix123#"
+name          = "azcn3-spoke85"
+cidr          = "10.85.1.0/24"
+account      = "AzCN-proj"
+transit_gw   = "aztransit84-cn3"
+attached     = "true"
+nat_attached = "false"
+ha_gw        = "false"
+
+
+tags = {
+  ProjectName        = "CN test"
+  BusinessOwnerEmail = "apatel@aviatrix.com"
+}
+
+
+spoke_cidrs = ["10.85.1.0/24",]
+gw1_snat    = "10.255.185.1"
+gw2_snat    = "10.255.185.2"
+dnatip      = "10.185.1.20"
+dnatip2     = "10.185.1.53"
+dstcidr     = "10.255.185.251/32"
+dstcidr2    = "10.255.185.252/32"
+
+
+# *** REMEMBER to set controller_nsg ***
+# nsg_management
+gateway_resource_group = "atulrg-cnspk85"
+#gateway_region = "China East"
+gateway_name = "azcn3-spoke85"
+controller_nsg_name = "azCN-ctl-security-group"
+controller_nsg_resource_group_name = "azCN-ctl-rg" 
+controller_nsg_rule_priority = "110"
+```
 
 
 ###   az-germanynorth 
 
 Example of deploying Aviatrix Transit + Spoke outside China
 Added as a comparison.
+Example of *tfvars
 
+```
+controller_ip = ""
+ctrl_password = "Aviatrix123#"
+name          = "az-spoke58-gec"
+cidr          = "10.58.1.0/24"
+region       = "Germany West Central"
+account      = "AZ-proj"
+transit_gw   = "aztransit48-gec"
+attached     = "true"
+nat_attached = "false"
+ha_gw        = "false"
+
+
+tags = {
+  ProjectName        = "vWAN migration proj"
+  BusinessOwnerEmail = "apatel@aviatrix.com"
+}
+
+
+spoke_cidrs = ["10.85.1.0/24",]
+gw1_snat    = "10.255.185.1"
+gw2_snat    = "10.255.185.2"
+dnatip      = "10.185.1.20"
+dnatip2     = "10.185.1.53"
+dstcidr     = "10.255.185.251/32"
+dstcidr2    = "10.255.185.252/32"
+```
 
 
 ## Prerequisites
