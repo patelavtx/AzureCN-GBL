@@ -17,6 +17,10 @@ This Terraform module:
 - Adds a security rule to the existing NSG associated with an Azure Controller deployed in China
 
 
+** IMPORTANT -  check the controller RG and NSG that is needed, incorrect setting will waste over 20mins before GW fails due to 'initialization' failure ***
+**           -  +  =< 7.0  cannot handle 'use_existing_vpc' + HA + EIP;
+**           -  +  'use_existing_vpc' fails if vnet created by Azure and not Avtx orchestration (address_prefix issue)
+
 
 
 ## Examples
